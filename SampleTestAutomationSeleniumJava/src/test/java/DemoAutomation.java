@@ -6,6 +6,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class DemoAutomation {
 
     private GetWebDriverAndUse helper = new GetWebDriverAndUse();
@@ -52,5 +54,37 @@ public class DemoAutomation {
     public void verifyDocSubTitle(){
         String docSubTitle = driver.findElement(By.xpath(constants.DOC_SUBTITLE_XPATH)).getText();
         Assert.assertEquals(docSubTitle, constants.DOC_SUBTITLE);
+    }
+    @Test
+    public void verifyTitleSubTitleVerticalAlignment(){
+        WebElement docTitle = driver.findElement(By.xpath(constants.DOC_TITLE_XPATH));
+        int xDocTitle = helper.getXDocTitle(driver, constants.DOC_TITLE_XPATH);
+
+        WebElement docSubtitle = driver.findElement(By.xpath(constants.DOC_SUBTITLE_XPATH));
+        int xSubTitleElement = docSubtitle.getLocation().getX();
+
+        Assert.assertEquals(xSubTitleElement, xDocTitle);
+    }
+    @Test
+    public void verifyPageLinksVerticallyAligned(){
+        List<WebElement> links = driver.findElements(By.xpath(constants.LINKS_XPATH));
+        int xDocTitle = helper.getXDocTitle(driver, constants.DOC_TITLE_XPATH);
+        boolean linksAligned = helper.allLinksAreAligned(links, xDocTitle);
+
+        Assert.assertTrue( linksAligned);
+    }
+    @Test
+    public void testLogin() throws InterruptedException {
+        String originalWindowHandle = driver.getWindowHandle();
+        driver.findElement(By.linkText("Digest Authentication")).click();
+
+        String userNameAndPassword = "admin";
+        String target = "https://" + userNameAndPassword + ":" + userNameAndPassword + "@" + "the-internet.herokuapp.com/digest_auth";
+
+        driver.get(target);
+        String result = driver.findElement(By.xpath("//*[@id=\"content\"]/div/p")).getText();
+        driver.get(constants.DESIRED_WEBSITE);
+        Assert.assertEquals(result, "Congratulations! You must have the proper credentials.");
+
     }
 }

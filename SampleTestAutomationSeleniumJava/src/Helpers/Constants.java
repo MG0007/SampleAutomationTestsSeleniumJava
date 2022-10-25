@@ -8,4 +8,5 @@ public class Constants {
     final String DOC_TITLE_COLOR = "rgba(34, 34, 34, 1)";
     final String DOC_SUBTITLE_XPATH = "//*[@id=\"content\"]/h2";
     final String DOC_SUBTITLE = "Available Examples";
+    final String LINKS_XPATH = "//*[@id=\"content\"]/ul/li";
 }
