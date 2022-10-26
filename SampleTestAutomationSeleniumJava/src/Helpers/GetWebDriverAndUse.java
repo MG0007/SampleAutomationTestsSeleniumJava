@@ -21,7 +21,6 @@ public class GetWebDriverAndUse {
 
         return  browserNormalized;
     }
-
     public WebDriver createCorrectWebDriver(String browser){
         WebDriver driver;
         String browserToUse = validateBrowserParameterValid(browser);
@@ -39,7 +38,6 @@ public class GetWebDriverAndUse {
             throw new IllegalArgumentException("Can't create correct browser");
         }
     }
-
     public int getXDocTitle(WebDriver driver, String xpath){
         WebElement docTitle = driver.findElement(By.xpath(xpath));
         return docTitle.getLocation().getX();
